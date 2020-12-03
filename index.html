@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="node_modules/bulma/css/bulma.min.css">
+  <title>Online movies</title>
+</head>
+<body>
+  
+  <div class="container">
+    <form class="my-2 js-search-form" action="https://echo.htmlacademy.ru" method="post">
+      <div class="field has-addons" >
+        <div class="control is-expanded">
+          <input type="text" placeholder="Search..." name="search" autocomplete="off" spellcheck="false" aria-label="Search" class="input is-info js-search-input">
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-info js-search-btn">Search</button>
+        </div>
+      </div>
+    </form>
+    
+    <div class="columns">
+      <div class="column is-half">
+        
+        <aside class="menu">
+          <ul class="menu-list movies-list">
+          </ul>
+        </aside>
+        
+        
+        <nav class="pagination" role="navigation" aria-label="pagination">
+          <ul class="pagination-list js-pagination-list">
+          </ul>
+        </nav>
+      </div>
+      <div class="column movie-full-info is-half is-hidden">
+        <div class="is-flex is-align-items-flex-start">
+          <img class="movie-img is-flex-shrink-0" src="" alt="" width="250" >
+          <div class="is-flex p-2 is-flex-direction-column is-flex-grow-1 is-clipped">
+            
+            <h2 class="movie-title title is-5  mb-0">
+            </h2>
+            <div class="is-flex full">
+              <span class="is-flex-shrink-0">
+                <span class="movie-duration"></span> |
+              </span>
+              <span class="is-flex-shrink-0">
+                <span class="movie-rated"></span> |
+              </span>
+              <span class="movie-genre  is-full is-flex-grow-1 text-truncate"></span>
+            </div>
+            
+            <div class="is-flex is-flex-direction-column my-4">
+              <p>
+                <strong>Realeased : </strong>
+                <span class="movie-year"></span>
+              </p>
+              <p>
+                <strong>Language : </strong>
+                <span class="movie-language"></span>
+              </p>
+              <p>
+                <strong>Country : </strong>
+                <span class="movie-country"></span>
+              </p>
+            </div>
+            
+            <div class="is-flex is-justify-content-space-around">
+              <div>
+                <img src="img/e2beaa7c.png" width="50" height="50" alt="imdb">
+                <p class="imdb-rating has-text-centered"></p>
+              </div>
+              
+              <div>
+                <img src="img/tomato.png" width="50" height="50" alt="imdb">
+                <p class="rt-rating has-text-centered"></p>
+              </div>
+              
+              <div>
+                <img src="img/r-logo.png" width="50" height="50" alt="imdb">
+                <p class="m-rating has-text-centered"></p>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="p-3">
+          <p class="movie-description">
+          </p>
+          
+          <p class="my-1">
+            <strong>Director : </strong>
+            <span class="movie-director"></span>
+          </p>
+          
+          <p class="is-flex full is-clipped my-1">
+            <strong class="is-flex-shrink-0">Writers : </strong>
+            <span class="movie-writer full text-truncate"></span>
+          </p>
+          <p class="is-flex full is-clipped my-1">
+            <strong class="is-flex-shrink-0">Stars : </strong>
+            <span class="movie-actors full text-truncate"></span>
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  <button class="button button-to-top js-button-to-top">
+    ☝🏻
+  </button>
+  
+  
+  <template id="movie-trailer-template"> 
+    <li class="is-flex my-2">
+      <a class="is-flex-grow-1 is-flex is-align-items-center movie-name">Transformer</a>
+      <button class="button is-normal is-info js-movie-info-btn">Info</button>
+    </li>
+  </template>
+  
+  
+  <template id="pagination-template">
+    <li>
+      <a class="button pagination-link page-number" aria-label="" aria-current="page">1</a>
+    </li>
+  </template>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>
