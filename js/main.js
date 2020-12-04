@@ -2,6 +2,8 @@ var elSearchForm = document.querySelector(".js-search-form")
 var elSearchInput = elSearchForm.querySelector(".js-search-input");
 var elSearchBtn = elSearchForm.querySelector(".js-search-btn");
 
+var tempImg = "img/film-placeholder.png";
+
 var movieFullInfo = document.querySelector(".movie-full-info");
 
 var elMoviesList = document.querySelector(".movies-list");
@@ -108,8 +110,20 @@ elPaginationList.addEventListener("click" , (evt)=>{
 
 var renderMovieInfo = (object)=>{
   movieFullInfo.classList.remove("is-hidden");
+  var posterSource = "";
   
-  movieFullInfo.querySelector(".movie-img").src = object.Poster;
+  var checkPoster = (poster) =>{
+    if (poster === "N/A"){
+      posterSource = "";
+    }else if  (!poster){
+      posterSource = "";
+    }else {
+      posterSource = poster;
+    }
+  };
+  checkPoster(object.Poster);
+  
+  movieFullInfo.querySelector(".movie-img").src = posterSource || tempImg;
   movieFullInfo.querySelector(".movie-img").alt = object.Title;
   movieFullInfo.querySelector(".movie-title").textContent = object.Title ;
   movieFullInfo.querySelector(".movie-duration").textContent = object.Runtime;
@@ -118,38 +132,37 @@ var renderMovieInfo = (object)=>{
   movieFullInfo.querySelector(".movie-year").textContent = object.Released;
   movieFullInfo.querySelector(".movie-language").textContent = object.Language;
   movieFullInfo.querySelector(".movie-country").textContent = object.Country;
-  var boo = object.Ratings;
-  var none = {};
-  var checkRateName = function (name) {
-    none = {};
-    boo.forEach((i)=>{
-      if (i.Source === name){
-        none = i
+  var objectRatings = object.Ratings;
+
+  movieFullInfo.querySelector(".imdb-rating").textContent = "N/A";
+  movieFullInfo.querySelector(".rt-rating").textContent = "N/A";
+  movieFullInfo.querySelector(".m-rating").textContent = "N/A";
+  
+  if( objectRatings.length >= 0){
+    objectRatings.forEach(element =>{
+      if (element.Source === "Internet Movie Database"){
+        movieFullInfo.querySelector(".imdb-rating").textContent = element.Value;
+      }
+      else if (element.Source === "Rotten Tomatoes"){
+        movieFullInfo.querySelector(".rt-rating").textContent = element.Value;
+      }
+      else if (element.Source === "Metacritic"){
+        movieFullInfo.querySelector(".m-rating").textContent = element.Value;
       }
     });
-  };
-  checkRateName("Internet Movie Database");
-  var imdbRating = none || { Value : "N/A" };
-  movieFullInfo.querySelector(".imdb-rating").textContent = imdbRating.Value;
-  
-  checkRateName("Rotten Tomatoes");
-  var RTRating = none || { Value : "N/A" };
-  movieFullInfo.querySelector(".rt-rating").textContent = RTRating.Value;
-  
-  checkRateName("Metacritic");
-  var MRating = none || { Value : "N/A" };
-  movieFullInfo.querySelector(".m-rating").textContent = MRating.Value;
+  }
   movieFullInfo.querySelector(".movie-description").textContent = object.Plot;
   movieFullInfo.querySelector(".movie-director").textContent = object.Director
   movieFullInfo.querySelector(".movie-writer").textContent = object.Writer;
   movieFullInfo.querySelector(".movie-actors").textContent = object.Actors;
+  console.log(object); 
 }
 
 elMoviesList.addEventListener("click" , (evt)=>{
   if(evt.target.matches(".js-movie-info-btn")){
     var movieImDBID = evt.target.dataset.id ;
     evt.target.classList.add("is-loading");
-    movieFullInfo.querySelector(".movie-img").src = "https://picsum.photos/id/570/250/350?beacon";
+    // movieFullInfo.querySelector(".movie-img").src = tempImg;
     
     fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${movieImDBID}`)
     .then(function (response) {
